@@ -26,7 +26,7 @@ with JevAdapter(model="typesafe/jev-1.13") as decision_model:
 
 Laya, Von, and Hugging Face integrations process text locally after model artifacts are available. Von requires Python 3.12+; MLX requires compatible Apple Silicon, macOS 14+, and Python 3.11+. See the [integration guide](docs/integrations.md) for installation, models, mappings, devices, privacy, examples and limitations, and the [release notes](CHANGELOG.md).
 
-The original diagrams and historical experiment results below are retained. They do not benchmark these new integrations. Version-specific 0.2.0 prerelease notes below describe the earlier release. This repository now contains 0.3.0; PyPI publication remains a separate maintainer-triggered action.
+The original diagrams and historical experiment results below are retained. They do not benchmark these new integrations. Version-specific 0.3.0 prerelease notes below describe the earlier release. This repository now contains 0.3.0; PyPI publication remains a separate maintainer-triggered action.
 
 ## How the layers work
 
@@ -38,7 +38,7 @@ Both guards accept the text your application supplies. Your decision adapter eva
 
 ## Earlier experiment: detector-hit reductions
 
-The [supermarket security experiment](https://github.com/Nassirx1/Enhancing-LLM-Security-Through-Decision-Models) tested `qwen/qwen-2.5-7b-instruct` with `~typesafe/jev-latest`, using garak 0.17.0 and highest-probability decisions. It recorded **19,965 attempts per path** before the conservative 20,000-per-path stop. This experiment motivated the middleware; it predates ERYMA 0.2.0 and does not benchmark this release or every supported decision model.
+The [supermarket security experiment](https://github.com/Nassirx1/Enhancing-LLM-Security-Through-Decision-Models) tested `qwen/qwen-2.5-7b-instruct` with `~typesafe/jev-latest`, using garak 0.17.0 and highest-probability decisions. It recorded **19,965 attempts per path** before the conservative 20,000-per-path stop. This experiment motivated the middleware; it predates ERYMA 0.3.0 and does not benchmark this release or every supported decision model.
 
 ![Native garak delivered detector hits: baseline 4124, input 50, input plus output 47](https://raw.githubusercontent.com/Nassirx1/eryma/main/docs/images/experiment-results.svg)
 
@@ -56,7 +56,7 @@ A detector hit means that the selected garak detector scored its specific target
 
 ## Install
 
-Python 3.10+. Version 0.2.0 is a local prerelease, not published to PyPI. From this directory:
+Python 3.10+. Version 0.3.0 is a local prerelease, not published to PyPI. From this directory:
 
 ```sh
 python -m pip install .
@@ -239,9 +239,9 @@ Disabled methods immediately return skipped/allow without validating scan payloa
 ```sh
 python -m pip install -e '.[dev]'
 python -m pytest
-python -m build --outdir dist/eryma-0.2.0
+python -m build --outdir dist/eryma-0.3.0
 ```
 
 Synchronous, single-turn, text-only middleware. No managed inference, streaming interception, tools, autonomous actions or protection of content not submitted. Enforce application authorization, data minimization, request-size/rate limits and safe rendering separately. Decide what data your decision provider is permitted to receive. Disabling guards or selecting ALLOW/FLAG on failures weakens protection.
 
-The earlier supermarket garak results and SDK security-review draft do not evaluate ERYMA 0.2.0. Tests use mocked models and establish software behavior, not real-world detection accuracy. See [migration](MIGRATION.md) and [contributing](CONTRIBUTING.md). MIT licensed. This version has not been published to PyPI.
+The earlier supermarket garak results and SDK security-review draft do not evaluate ERYMA 0.3.0. Tests use mocked models and establish software behavior, not real-world detection accuracy. See [migration](MIGRATION.md) and [contributing](CONTRIBUTING.md). MIT licensed. This version has not been published to PyPI.
