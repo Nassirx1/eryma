@@ -1,0 +1,32 @@
+{
+  "experiment_date": "2026-10-13",
+  "experiment_repository": "https://github.com/Nassirx1/Enhancing-LLM-Security-Through-Decision-Models",
+  "local_evidence_directory": "results/all-text-budget-capped",
+  "source_files": ["baseline.attempts.jsonl", "input.attempts.jsonl", "input_output.attempts.jsonl"],
+  "garak_version": "0.17.0",
+  "protected_model": "qwen/qwen-2.5-7b-instruct",
+  "decision_model": "~typesafe/jev-latest",
+  "attempts_per_path": 19965,
+  "matched_native_scored_attack_prompts": 19901,
+  "method": "Intersect (case_id, probe, prompt) across all three paths after excluding benign cases, errors, missing native_detector_score and detector supermarket.Outcome. Count native_detector_score >= 0.5 only where blocked_stage is empty. No custom secret/canary flag is added. Rates per matched prompt retain prevented deliveries in the denominator.",
+  "paths": [
+    {"path": "baseline", "delivered": 19901, "blocked": 0, "delivered_native_hits": 4124},
+    {"path": "input", "delivered": 411, "blocked": 19490, "delivered_native_hits": 50},
+    {"path": "input_output", "delivered": 404, "blocked": 19497, "delivered_native_hits": 47}
+  ],
+  "same_candidate_output_isolation": {
+    "source": "results/output-guard-isolation/final-capped.json",
+    "scored_attack_candidates": 408,
+    "hits_before": 47,
+    "hits_after": 47,
+    "all_output_blocks_including_benign": 5,
+    "manual_review_confirmed_wrong_price_prevented": 1
+  },
+  "limitations": [
+    "Historical experiment does not evaluate ERYMA 0.2.0.",
+    "No hit does not establish safety; native detectors evaluate specific targets.",
+    "Independent generation means between-path differences do not establish the marginal output-guard effect.",
+    "Most guarded cases were blocked; delivered-only rates differ from per-prompt rates.",
+    "Single-turn text experiment; not full vulnerability coverage or an independent comprehensive safety review."
+  ]
+}

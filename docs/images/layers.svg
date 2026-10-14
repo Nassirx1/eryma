@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="990" viewBox="0 0 520 990" role="img" aria-labelledby="title desc">
+<title id="title">ERYMA input and output security layers</title><desc id="desc">The application scans a user input, calls its own LLM only when allowed, scans the resulting output, and displays it only when allowed. Each guard can be independently disabled. Blocked results stop the application flow.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10Z" fill="#64748b"/></marker></defs>
+<rect width="520" height="990" rx="20" fill="#f8fafc"/>
+<g font-family="Arial,sans-serif" text-anchor="middle" fill="#0f172a">
+<text x="260" y="42" font-size="27" font-weight="700">Two independent security layers</text>
+<text x="260" y="72" font-size="17">Your application owns generation and enforcement</text>
+<rect x="90" y="100" width="340" height="65" rx="12" fill="#e2e8f0"/><text x="260" y="141" font-size="23">User input</text>
+<path d="M260 165V208" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="60" y="218" width="400" height="140" rx="14" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+<text x="260" y="252" font-size="24" font-weight="700">1. ERYMA input scan</text>
+<text x="260" y="283" font-size="19">scan_input(user_prompt)</text>
+<text x="260" y="313" font-size="18">Your decision model evaluates checks</text>
+<text x="260" y="340" font-size="17">Disabled: skipped + allow, no model call</text>
+<path d="M160 358V404" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/><path d="M365 358V404" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="150" y="390" font-size="17">allowed = true</text><text x="365" y="390" font-size="17">blocked / error</text>
+<rect x="45" y="416" width="225" height="90" rx="12" fill="#e0e7ff"/><text x="157" y="451" font-size="22" font-weight="700">Your LLM</text><text x="157" y="481" font-size="17">Application calls it</text>
+<rect x="300" y="416" width="170" height="90" rx="12" fill="#fee2e2"/><text x="385" y="451" font-size="22" font-weight="700">Stop</text><text x="385" y="481" font-size="17">Handle the result</text>
+<path d="M157 506V544H260V579" fill="none" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="60" y="590" width="400" height="140" rx="14" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+<text x="260" y="624" font-size="24" font-weight="700">2. ERYMA output scan</text>
+<text x="260" y="655" font-size="19">scan_output(buffered_response)</text>
+<text x="260" y="685" font-size="18">Your decision model reviews the answer</text>
+<text x="260" y="712" font-size="17">Disabled: skipped + allow, no model call</text>
+<path d="M160 730V778" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/><path d="M365 730V778" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="150" y="763" font-size="17">allowed = true</text><text x="365" y="763" font-size="17">blocked / error</text>
+<rect x="45" y="790" width="225" height="90" rx="12" fill="#dcfce7"/><text x="157" y="825" font-size="22" font-weight="700">Display answer</text><text x="157" y="855" font-size="17">FLAG also allows</text>
+<rect x="300" y="790" width="170" height="90" rx="12" fill="#fee2e2"/><text x="385" y="825" font-size="22" font-weight="700">Stop</text><text x="385" y="855" font-size="17">Withhold answer</text>
+<text x="260" y="927" font-size="18">Input only · Output only · Both · Neither</text>
+<text x="260" y="958" font-size="17">Adapters can use local or cloud decision models</text>
+</g></svg>

@@ -2,6 +2,32 @@
 
 Lightweight, model-agnostic Python security middleware. **You run your LLM. Eryma evaluates only the inputs and outputs you explicitly pass to it.** There is no protected-model client, inference call, mandatory provider, or built-in API credential.
 
+## How the layers work
+
+![ERYMA input and output layers, with independent switches and application enforcement](https://raw.githubusercontent.com/Nassirx1/eryma/main/docs/images/layers.svg)
+
+Both guards accept the text your application supplies. Your decision adapter evaluates the configured checks. Your application reads `allowed` before generation or display. Either guard can be switched off independently. The diagrams are SVG images that render directly on GitHub, including mobile, without a Mermaid viewer.
+
+![ERYMA score evaluation states and action precedence](https://raw.githubusercontent.com/Nassirx1/eryma/main/docs/images/decision-states.svg)
+
+## Earlier experiment: detector-hit reductions
+
+The [supermarket security experiment](https://github.com/Nassirx1/Enhancing-LLM-Security-Through-Decision-Models) tested `qwen/qwen-2.5-7b-instruct` with `~typesafe/jev-latest`, using garak 0.17.0 and highest-probability decisions. It recorded **19,965 attempts per path** before the conservative 20,000-per-path stop. This experiment motivated the middleware; it predates ERYMA 0.2.0 and does not benchmark this release or every supported decision model.
+
+![Native garak delivered detector hits: baseline 4124, input 50, input plus output 47](https://raw.githubusercontent.com/Nassirx1/eryma/main/docs/images/experiment-results.svg)
+
+The comparison below uses the **same 19,901 error-free, native-garak-scored attack prompts** across all three paths. **Blocked responses are excluded from hit counts.** Local supermarket/canary detectors, benign cases, errors, and unavailable native scores are excluded.
+
+| Path | Delivered native detector hits | Hits per matched attack prompt | Reduction vs baseline |
+|---|---:|---:|---:|
+| Baseline LLM | 4,124 | 20.7226% | — |
+| Input guard + LLM | 50 | 0.2512% | 98.79% |
+| Input guard + LLM + output guard | 47 | 0.2362% | 98.86% |
+
+Reduction is `(baseline hits − guarded hits) / baseline hits`. These rates use all matched attack prompts as the denominator, including prevented delivery; they are not hit rates among only delivered answers. Among delivered answers, the input path flagged 50/411 (12.17%) and the input/output path flagged 47/404 (11.63%). Most of the overall reduction came from input blocking.
+
+A detector hit means that the selected garak detector scored its specific target at least 0.5. No hit does not establish safety. The three paths generated independently, so the 50-versus-47 difference does not establish an output-guard effect. A separate identical-candidate check found **47 hits before and 47 after output filtering** across 408 scored attack candidates. Manual review nevertheless found one wrong-price claim prevented by the output guard, alongside overblocking/ambiguous cases. See [aggregate evidence and methodology](docs/experiment-results.json). Raw garak logs and attack datasets are kept in the experiment project, not bundled here.
+
 ## Install
 
 Python 3.10+. Version 0.2.0 is a local prerelease, not published to PyPI. From this directory:

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="485" viewBox="0 0 520 485" role="img" aria-labelledby="title desc">
+<title id="title">Historical experiment native garak detector hits</title><desc id="desc">On 19901 matched native-scored attacks, delivered detector hits were baseline 4124, input guard 50, and input plus output guard 47. Blocked responses are excluded from hit counts. This experiment predates ERYMA 0.2.0.</desc>
+<rect width="520" height="485" rx="20" fill="#f8fafc"/>
+<g font-family="Arial,sans-serif" fill="#0f172a">
+<text x="30" y="43" font-size="26" font-weight="700">Fewer delivered detector hits</text>
+<text x="30" y="75" font-size="18">19,901 matched native-scored attack prompts</text>
+<text x="30" y="126" font-size="22" font-weight="700">Baseline</text><text x="490" y="126" text-anchor="end" font-size="22">4,124</text>
+<rect x="30" y="144" width="460" height="28" rx="5" fill="#dc2626"/>
+<text x="30" y="213" font-size="22" font-weight="700">Input guard</text><text x="490" y="213" text-anchor="end" font-size="22">50</text>
+<rect x="30" y="231" width="5.58" height="28" rx="2" fill="#2563eb"/><text x="52" y="251" font-size="18">98.79% reduction vs baseline</text>
+<text x="30" y="300" font-size="22" font-weight="700">Input + output guards</text><text x="490" y="300" text-anchor="end" font-size="22">47</text>
+<rect x="30" y="318" width="5.24" height="28" rx="2" fill="#16a34a"/><text x="52" y="338" font-size="18">98.86% reduction vs baseline</text>
+<text x="30" y="388" font-size="18">Bars use the same scale; blocked replies excluded.</text>
+<text x="30" y="419" font-size="17">Earlier Qwen / Jev experiment, not an ERYMA test.</text>
+<text x="30" y="451" font-size="17">No detector hit does not establish safety.</text>
+</g></svg>
