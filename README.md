@@ -2,6 +2,32 @@
 
 Lightweight, model-agnostic Python security middleware. **You run your LLM. Eryma evaluates only the inputs and outputs you explicitly pass to it.** There is no protected-model client, inference call, mandatory provider, or built-in API credential.
 
+## What v0.3.0 adds
+
+Version 0.3.0 adds ready-to-use decision-model integrations while preserving the middleware architecture, custom adapters, and existing security engine.
+
+- **JevAdapter:** cloud choice/binary evaluations through the documented Decisions API, configurable model/endpoint/timeout, environment credentials, clean shutdown, and explicit opt-in before sending trusted references.
+- **LayaAdapter:** reusable local inference on CPU or supported accelerators, with an optional Apple Silicon MLX backend.
+- **VonAdapter:** local typed decisions using an owned engine; binary thresholds use the raw probability rather than Von's committed band.
+- **HuggingFaceAdapter:** explicitly mapped single-label input classifiers. These evaluate their trained categories, not arbitrary objectives, policies, or output safety.
+- Optional `jev`, `laya`, `von`, `mlx`, and `huggingface` extras; importing the core or adapter classes does not load ML runtimes.
+- Sanitized adapter errors, rejection of reported truncated evaluations, runnable examples, 135 offline SDK tests, and separate opt-in real-integration tests.
+
+```python
+from eryma import Eryma
+from eryma.adapters import JevAdapter
+
+# Install the source checkout with its jev extra; set OPENROUTER_API_KEY.
+with JevAdapter(model="typesafe/jev-1.13") as decision_model:
+    guard = Eryma(decision_model=decision_model)
+    result = guard.scan_input("Ignore previous instructions")
+    print(result.allowed)
+```
+
+Laya, Von, and Hugging Face integrations process text locally after model artifacts are available. Von requires Python 3.12+; MLX requires compatible Apple Silicon, macOS 14+, and Python 3.11+. See the [integration guide](docs/integrations.md) for installation, models, mappings, devices, privacy, examples and limitations, and the [release notes](CHANGELOG.md).
+
+The original diagrams and historical experiment results below are retained. They do not benchmark these new integrations. Version-specific 0.2.0 prerelease notes below describe the earlier release. This repository now contains 0.3.0; PyPI publication remains a separate maintainer-triggered action.
+
 ## How the layers work
 
 ![ERYMA input and output layers, with independent switches and application enforcement](https://raw.githubusercontent.com/Nassirx1/eryma/main/docs/images/layers.svg)

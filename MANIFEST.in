@@ -1,5 +1,8 @@
 include LICENSE README.md MIGRATION.md CONTRIBUTING.md SECURITY.md
+include CHANGELOG.md
+include docs/integrations.md
 recursive-include examples *.py
 recursive-include tests *.py
+recursive-include integration_tests *.py
 global-exclude *.py[cod]
 global-exclude __pycache__
