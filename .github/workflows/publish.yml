@@ -1,0 +1,55 @@
+name: Publish ERYMA to PyPI
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: eryma-pypi-publish
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install test and packaging tools
+        run: python -m pip install '.[dev]' twine
+      - name: Run offline tests
+        run: python -m pytest
+      - name: Build wheel and source distribution
+        run: python -m build --outdir dist
+      - name: Validate package metadata and README
+        run: python -m twine check --strict dist/*
+      - name: Save distributions for publishing
+        uses: actions/upload-artifact@v4
+        with:
+          name: eryma-distributions
+          path: dist/*
+          if-no-files-found: error
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/eryma/
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Download verified distributions
+        uses: actions/download-artifact@v4
+        with:
+          name: eryma-distributions
+          path: dist
+      - name: Publish with PyPI Trusted Publishing
+        uses: pypa/gh-action-pypi-publish@release/v1
