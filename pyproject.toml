@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eryma"
+version = "0.2.0"
+description = "Model-agnostic input and output security middleware"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/Nassirx1/eryma"
+Repository = "https://github.com/Nassirx1/eryma"
+Issues = "https://github.com/Nassirx1/eryma/issues"
+
+[project.optional-dependencies]
+http = ["httpx>=0.27,<1"]
+dev = ["pytest>=8,<10", "build>=1,<2", "httpx>=0.27,<1"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["eryma*"]
+
+[tool.setuptools.package-data]
+eryma = ["py.typed"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

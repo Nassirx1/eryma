@@ -1,0 +1,5 @@
+include LICENSE README.md MIGRATION.md CONTRIBUTING.md SECURITY.md
+recursive-include examples *.py
+recursive-include tests *.py
+global-exclude *.py[cod]
+global-exclude __pycache__
