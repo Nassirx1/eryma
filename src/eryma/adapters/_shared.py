@@ -59,13 +59,6 @@ def require_mlx_environment():
 
 def normalize(data, request, formatter):
     try:
-        if not isinstance(data, dict):
-            raise ValueError()
-        usage = data.get("usage") or {}
-        # Never allow known partial-state evaluations to look like full coverage.
-        if (usage.get("truncated") or usage.get("state_tokens_dropped", 0)
-                or usage.get("options") or data.get("truncation")):
-            raise ValueError()
         raw = formatter.parse_response(data, request)
         return {check.name: ScoreDistribution(*validate_scores(check, raw[check.name]))
                 for check in request.checks}

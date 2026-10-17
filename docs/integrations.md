@@ -94,6 +94,8 @@ Other compatible single-label models can use explicit mappings; there is no auto
 
 ## Errors and cleanup
 
+Since 0.3.1, direct `DecisionsAPIFormat` parsing and native Jev/Laya/Von normalization share the same rejection of reported truncation, dropped state tokens and collapsed options. Such responses are evaluation errors (BLOCK by default); explicitly configured failure actions still apply. This does not detect unreported truncation or guarantee semantic correctness. Arbitrary custom HTTP parsers remain responsible for their own provider's completeness indicators.
+
 Native adapters raise fixed-message errors with stable `code` values: missing_dependency, unsupported_environment, unsupported_model, unsupported_criteria, invalid_output, authentication_failure, network_failure, timeout, model_loading_failure, inference_failure. Catch exported classes from `eryma.adapters` when calling adapters directly. Through Eryma, errors retain the existing `GuardPolicy.failure_action` behavior; default BLOCK. Model/provider content is not copied into error messages or results. Python exception frames or third-party instrumentation may still capture sensitive locals; configure application instrumentation accordingly.
 
 Local adapters own their model references and support context managers/idempotent close. Closing releases their references; framework/global caches may still retain allocations. They do not log payloads or install telemetry hooks. Third-party runtime logging/environment behavior remains under the developer's control. No remote runtime is selected automatically by a local adapter.

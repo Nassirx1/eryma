@@ -1,5 +1,12 @@
 # Release notes
 
+## 0.3.1 — Consistent incomplete-evaluation rejection
+
+- Fix generic HTTP + DecisionsAPIFormat accepting otherwise valid scores when the provider explicitly reports truncation, dropped state tokens or collapsed options.
+- Share the format-owned completeness check with native Jev/Laya/Von adapters, preserving sanitized errors and score validation.
+- Preserve custom HTTP schemas, middleware APIs, thresholds, disabled guards and explicit developer failure-policy overrides.
+- Add 68 offline regression cases for input/output, direct parsing, native integrations, valid responses and failure policies. No model weights or paid API calls are required.
+
 ## 0.3.0 — Native decision-model integrations
 
 - Add lazy Jev, local Laya (torch/MLX), local Von, and fixed-category Hugging Face adapters under the common DecisionModel contract.

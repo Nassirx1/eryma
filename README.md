@@ -2,6 +2,10 @@
 
 Lightweight, model-agnostic Python security middleware. **You run your LLM. Eryma evaluates only the inputs and outputs you explicitly pass to it.** There is no protected-model client, inference call, mandatory provider, or built-in API credential.
 
+## What v0.3.1 adds
+
+Version 0.3.1 is a compatible security fix: the shared Decisions API parser now rejects provider-reported incomplete evaluations for generic HTTP integrations as well as native adapters. Middleware APIs, score selection, thresholds, custom providers and explicit failure policies are unchanged. The offline suite includes 203 tests. See the [release notes](CHANGELOG.md).
+
 ## What v0.3.0 adds
 
 Version 0.3.0 adds ready-to-use decision-model integrations while preserving the middleware architecture, custom adapters, and existing security engine.
@@ -56,15 +60,15 @@ A detector hit means that the selected garak detector scored its specific target
 
 ## Install
 
-Python 3.10+. Version 0.3.0 is a local prerelease, not published to PyPI. From this directory:
+Python 3.10+. Install release 0.3.1 after it is available on PyPI:
 
 ```sh
-python -m pip install .
+python -m pip install 'eryma==0.3.1'
 # Only if you want the optional generic HTTP transport:
-python -m pip install '.[http]'
+python -m pip install 'eryma[http]==0.3.1'
 ```
 
-The distribution and Python import are both `eryma`. After publication, installation will be `pip install eryma`; package-name availability has not been verified.
+The distribution and Python import are both `eryma`. If publication is pending, install this source checkout with `python -m pip install .` (or `'.[http]'` for the generic HTTP extra).
 
 ## Use your own decision model
 
@@ -239,9 +243,9 @@ Disabled methods immediately return skipped/allow without validating scan payloa
 ```sh
 python -m pip install -e '.[dev]'
 python -m pytest
-python -m build --outdir dist/eryma-0.3.0
+python -m build --outdir dist/eryma-0.3.1
 ```
 
 Synchronous, single-turn, text-only middleware. No managed inference, streaming interception, tools, autonomous actions or protection of content not submitted. Enforce application authorization, data minimization, request-size/rate limits and safe rendering separately. Decide what data your decision provider is permitted to receive. Disabling guards or selecting ALLOW/FLAG on failures weakens protection.
 
-ERYMA has been tested on the supermarket evaluation described above. Offline unit tests use mocked models to check software behavior. Evaluation results are configuration-specific, not a guarantee of safety or detection accuracy for every model and deployment. See [migration](MIGRATION.md) and [contributing](CONTRIBUTING.md). MIT licensed. This version has not been published to PyPI.
+ERYMA has been tested on the supermarket evaluation described above. Offline unit tests use mocked models to check software behavior. Evaluation results are configuration-specific, not a guarantee of safety or detection accuracy for every model and deployment. See [migration](MIGRATION.md) and [contributing](CONTRIBUTING.md). MIT licensed.

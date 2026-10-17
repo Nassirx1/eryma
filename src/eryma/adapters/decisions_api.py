@@ -28,6 +28,14 @@ class DecisionsAPIFormat:
             "trusted_context": request.trusted_context, "untrusted_data": request.untrusted_data}, "questions": questions}
 
     def parse_response(self, data: dict, request: EvaluationRequest) -> dict[str, ScoreDistribution]:
+        if not isinstance(data, dict):
+            raise ValueError("Invalid decisions response")
+        usage = data.get("usage") or {}
+        # Own completeness validation here so direct and native callers agree.
+        if (not isinstance(usage, dict) or usage.get("truncated")
+                or usage.get("state_tokens_dropped", 0) or usage.get("options")
+                or data.get("truncation")):
+            raise ValueError("Incomplete or invalid decisions response")
         answers = data.get('answers')
         if 'error' in data or not isinstance(answers, dict) or set(answers) != {c.name for c in request.checks}:
             raise ValueError("Invalid decisions response")
